@@ -8,6 +8,28 @@ use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
+    // Register
+    public function register(Request $request)
+    {
+        $request->validate([
+            'name' => 'required',
+            'email' => 'required|email|unique:users,email',
+            'password' => 'required|min:6',
+        ]);
+
+        $user = User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+        ]);
+
+        return response()->json([
+            'message' => 'Registration Successful',
+            'user' => $user,
+        ], 201);
+    }
+
+    // Login
     public function login(Request $request)
     {
         $user = User::where('email', $request->email)->first();
