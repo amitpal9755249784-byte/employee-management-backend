@@ -12,7 +12,7 @@ class AuthController extends Controller
     public function register(Request $request)
     {
         $request->validate([
-            'name' => 'required',
+            'name' => 'required|string|max:255',
             'email' => 'required|email|unique:users,email',
             'password' => 'required|min:6',
         ]);
@@ -43,6 +43,33 @@ class AuthController extends Controller
         return response()->json([
             'message' => 'Login Successful',
             'user' => $user
+        ]);
+    }
+
+    // Update Profile
+    public function updateProfile(Request $request, $id)
+    {
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|unique:users,email,' . $id,
+        ]);
+
+        $user = User::find($id);
+
+        if (!$user) {
+            return response()->json([
+                'message' => 'User not found'
+            ], 404);
+        }
+
+        $user->name = $request->name;
+        $user->email = $request->email;
+
+        $user->save();
+
+        return response()->json([
+            'message' => 'Profile Updated Successfully',
+            'user' => $user,
         ]);
     }
 }

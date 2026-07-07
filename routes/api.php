@@ -1,11 +1,12 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\EmployeeController;
 
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
+Route::put('/profile/{id}', [AuthController::class, 'updateProfile']);
 
 Route::get('/employees', [EmployeeController::class, 'index']);
 Route::post('/employees', [EmployeeController::class, 'store']);
