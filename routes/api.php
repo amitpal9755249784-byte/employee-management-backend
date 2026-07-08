@@ -7,6 +7,7 @@ use App\Http\Controllers\EmployeeController;
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
 Route::put('/profile/{id}', [AuthController::class, 'updateProfile']);
+Route::put('/change-password/{id}', [AuthController::class, 'changePassword']);
 
 Route::get('/employees', [EmployeeController::class, 'index']);
 Route::post('/employees', [EmployeeController::class, 'store']);
